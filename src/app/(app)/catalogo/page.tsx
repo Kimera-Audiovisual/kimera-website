@@ -1,27 +1,30 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import Tabs from '@/components/ui/Tabs';
 import PosterCard from '@/components/ui/PosterCard';
 import { IC } from '@/components/icons';
-import { POSTERS, GENRES } from '@/lib/data';
+import { GENRES, POSTERS, type PosterGenre } from '@/lib/data';
 
 export default function CatalogoPage() {
   const [genre, setGenre] = useState(0);
-  const filtered = genre === 0 ? POSTERS : POSTERS.filter((p) => p.genre === GENRES[genre]);
+  const selectedGenre = GENRES[genre];
+  const filtered = selectedGenre === 'Tudo' ? POSTERS : POSTERS.filter((p) => p.genre === (selectedGenre as PosterGenre));
   const visible = filtered.length ? filtered : POSTERS;
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--ink-950)' }}>
-      {/* Hero banner */}
       <div style={{ position: 'relative', height: 280, overflow: 'hidden' }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80"
           alt="Destaque"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 1200px"
+          style={{ objectFit: 'cover' }}
         />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(12,15,21,0.95) 0%, rgba(12,15,21,0.5) 60%, transparent 100%)' }} />
         <div style={{ position: 'absolute', bottom: 32, left: 40 }}>
@@ -41,7 +44,6 @@ export default function CatalogoPage() {
         </div>
       </div>
 
-      {/* Filters + Grid */}
       <div style={{ padding: '28px 32px' }}>
         <div style={{ marginBottom: 24 }}>
           <Tabs
@@ -53,8 +55,8 @@ export default function CatalogoPage() {
           />
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
-          {visible.map((p, i) => (
-            <PosterCard key={i} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
+          {visible.map((p) => (
+            <PosterCard key={p.title} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
           ))}
         </div>
       </div>

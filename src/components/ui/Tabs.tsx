@@ -1,9 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type CSSProperties, type ReactNode } from 'react';
 
-export default function Tabs({ tabs = [], activeIndex = 0, onChange, variant = 'line', style }) {
-  const [hover, setHover] = useState(null);
+type TabVariant = 'line' | 'pill';
+
+export type TabItem = {
+  label: string;
+  icon?: ReactNode;
+};
+
+type TabsProps = {
+  tabs: TabItem[];
+  activeIndex?: number;
+  onChange?: (index: number) => void;
+  variant?: TabVariant;
+  style?: CSSProperties;
+};
+
+export default function Tabs({ tabs, activeIndex = 0, onChange, variant = 'line', style }: TabsProps) {
+  const [hover, setHover] = useState<number | null>(null);
   const isPill = variant === 'pill';
   const isLine = variant === 'line';
 
@@ -25,10 +40,10 @@ export default function Tabs({ tabs = [], activeIndex = 0, onChange, variant = '
         const isHover = hover === i;
         return (
           <button
-            key={i}
+            key={tab.label}
             role="tab"
             aria-selected={active}
-            onClick={() => onChange && onChange(i)}
+            onClick={() => onChange?.(i)}
             onMouseEnter={() => setHover(i)}
             onMouseLeave={() => setHover(null)}
             style={{

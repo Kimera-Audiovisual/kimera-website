@@ -9,7 +9,7 @@ const STATS = [
   ['24', 'Obras no catálogo', 'var(--aegean-700)'],
   ['348', 'Seguidores', 'var(--terracotta-500)'],
   ['1.2k', 'Visualizações', 'var(--papyrus-600)'],
-];
+] as const;
 
 export default function HomePage() {
   const router = useRouter();
@@ -17,7 +17,6 @@ export default function HomePage() {
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--surface-page)' }}>
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '36px 32px' }}>
-        {/* Welcome */}
         <div style={{ marginBottom: 32 }}>
           <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', color: 'var(--text-muted)', marginBottom: 6 }}>
             DOMINGO, 22 DE JUNHO
@@ -30,11 +29,10 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Quick stats */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 36 }}>
-          {STATS.map(([n, l, c], i) => (
+          {STATS.map(([n, l, c]) => (
             <div
-              key={i}
+              key={l}
               style={{
                 background: 'var(--white)',
                 borderRadius: 'var(--radius-card)',
@@ -49,7 +47,6 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Featured catalog */}
         <div style={{ marginBottom: 36 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600, letterSpacing: '0.06em', color: 'var(--aegean-900)' }}>
@@ -63,13 +60,12 @@ export default function HomePage() {
             </button>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
-            {POSTERS.slice(0, 4).map((p, i) => (
-              <PosterCard key={i} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
+            {POSTERS.slice(0, 4).map((p) => (
+              <PosterCard key={p.title} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
             ))}
           </div>
         </div>
 
-        {/* Recent posts */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600, letterSpacing: '0.06em', color: 'var(--aegean-900)' }}>

@@ -1,6 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import {
+  useId,
+  useState,
+  type CSSProperties,
+  type InputHTMLAttributes,
+  type ReactNode,
+} from 'react';
+
+type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'style'> & {
+  label?: string;
+  error?: string;
+  hint?: string;
+  icon?: ReactNode;
+  style?: CSSProperties;
+};
 
 export default function Input({
   label,
@@ -16,9 +30,10 @@ export default function Input({
   icon,
   style,
   ...rest
-}) {
+}: InputProps) {
+  const generatedId = useId();
   const [focused, setFocused] = useState(false);
-  const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+  const inputId = id ?? (label ? label.toLowerCase().replace(/\s+/g, '-') : generatedId);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 5, ...style }}>

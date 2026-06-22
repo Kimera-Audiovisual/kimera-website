@@ -1,6 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import Image from 'next/image';
+import { useState, type CSSProperties } from 'react';
+
+type PostCardProps = {
+  author: string;
+  authorHandle?: string;
+  authorSrc?: string;
+  content: string;
+  timestamp?: string;
+  likes?: number;
+  comments?: number;
+  tags?: string[];
+  liked?: boolean;
+  onLike?: (liked: boolean) => void;
+  onComment?: () => void;
+  style?: CSSProperties;
+};
 
 export default function PostCard({
   author,
@@ -15,22 +31,22 @@ export default function PostCard({
   onLike,
   onComment,
   style,
-}) {
+}: PostCardProps) {
   const [isLiked, setIsLiked] = useState(liked);
   const [count, setCount] = useState(likes);
 
-  const initials = (author || '')
+  const initials = author
     .trim()
     .split(/\s+/)
     .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase() || '')
+    .map((w) => w[0]?.toUpperCase() ?? '')
     .join('');
 
   const toggleLike = () => {
     const next = !isLiked;
     setIsLiked(next);
     setCount((c) => (next ? c + 1 : c - 1));
-    onLike && onLike(next);
+    onLike?.(next);
   };
 
   return (
@@ -57,11 +73,11 @@ export default function PostCard({
             alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden',
+            position: 'relative',
           }}
         >
           {authorSrc ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={authorSrc} alt={author} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <Image src={authorSrc} alt={author} fill sizes="40px" style={{ objectFit: 'cover' }} />
           ) : (
             <span style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 700, color: 'var(--papyrus-200)' }}>
               {initials}
@@ -75,7 +91,7 @@ export default function PostCard({
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
             {authorHandle ? `@${authorHandle}` : ''}
             {authorHandle && timestamp ? ' · ' : ''}
-            {timestamp || ''}
+            {timestamp ?? ''}
           </span>
         </div>
       </div>
@@ -93,8 +109,8 @@ export default function PostCard({
 
       {tags.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
-          {tags.map((t, i) => (
-            <span key={i} style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--aegean-500)', cursor: 'pointer' }}>
+          {tags.map((t) => (
+            <span key={t} style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--aegean-500)', cursor: 'pointer' }}>
               #{t}
             </span>
           ))}

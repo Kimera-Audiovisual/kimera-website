@@ -1,20 +1,23 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { IC } from '@/components/icons';
 
 const ITEMS = [
-  { href: '/home',     label: 'Início',   icon: IC.home },
+  { href: '/home', label: 'Início', icon: IC.home },
   { href: '/catalogo', label: 'Catálogo', icon: IC.film },
-  { href: '/rede',     label: 'Rede',     icon: IC.network },
-  { href: '/perfil',   label: 'Perfil',   icon: IC.user },
-];
+  { href: '/rede', label: 'Rede', icon: IC.network },
+  { href: '/perfil', label: 'Perfil', icon: IC.user },
+] as const;
+
+type NavHref = (typeof ITEMS)[number]['href'];
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [hover, setHover] = useState(null);
+  const [hover, setHover] = useState<NavHref | null>(null);
 
   return (
     <nav
@@ -31,7 +34,6 @@ export default function Sidebar() {
         overflowY: 'auto',
       }}
     >
-      {/* Logo */}
       <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid rgba(233,216,166,0.12)' }}>
         <div style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900, letterSpacing: '0.18em', color: 'var(--papyrus-400)' }}>
           KIMERA
@@ -41,7 +43,6 @@ export default function Sidebar() {
         </div>
       </div>
 
-      {/* Nav items */}
       <div style={{ flex: 1, padding: '16px 12px', display: 'flex', flexDirection: 'column', gap: 4 }}>
         {ITEMS.map((item) => {
           const active = pathname === item.href;
@@ -79,7 +80,6 @@ export default function Sidebar() {
         })}
       </div>
 
-      {/* User + logout */}
       <div style={{ padding: '16px 14px', borderTop: '1px solid rgba(233,216,166,0.10)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <div
           style={{
@@ -92,10 +92,10 @@ export default function Sidebar() {
             justifyContent: 'center',
             flexShrink: 0,
             overflow: 'hidden',
+            position: 'relative',
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="https://i.pravatar.cc/72?img=3" alt="Maria Oliveira" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <Image src="https://i.pravatar.cc/72?img=3" alt="Maria Oliveira" fill sizes="36px" style={{ objectFit: 'cover' }} />
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 700, color: 'var(--papyrus-300)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

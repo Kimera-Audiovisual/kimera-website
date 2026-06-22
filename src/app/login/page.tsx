@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
@@ -16,7 +17,6 @@ export default function LoginPage() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: '1fr 1fr', background: 'var(--surface-page)' }}>
-      {/* Left brand panel */}
       <div
         style={{
           background: 'linear-gradient(160deg, var(--aegean-900) 0%, var(--aegean-700) 100%)',
@@ -29,11 +29,13 @@ export default function LoginPage() {
           overflow: 'hidden',
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src="/assets/chimera-winged-lion.jpg"
           alt=""
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'invert(1)', opacity: 0.06 }}
+          fill
+          priority
+          sizes="50vw"
+          style={{ objectFit: 'cover', filter: 'invert(1)', opacity: 0.06 }}
         />
         <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <div style={{ fontFamily: 'var(--font-display)', fontSize: 52, fontWeight: 900, letterSpacing: '0.18em', color: 'var(--papyrus-400)', lineHeight: 1 }}>
@@ -47,12 +49,11 @@ export default function LoginPage() {
             &quot;O cinema é a verdade vinte e quatro vezes por segundo.&quot;
           </p>
           <p style={{ fontFamily: 'var(--font-sans)', fontSize: 11, color: 'var(--papyrus-600)', letterSpacing: '0.1em', marginTop: 12 }}>
-            — JEAN-LUC GODARD
+            - JEAN-LUC GODARD
           </p>
         </div>
       </div>
 
-      {/* Right form panel */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 48 }}>
         <div style={{ width: '100%', maxWidth: 380 }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--aegean-900)', marginBottom: 6 }}>

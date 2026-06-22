@@ -1,20 +1,39 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type ButtonHTMLAttributes, type CSSProperties, type ReactNode } from 'react';
 
-const VARIANTS = {
-  primary:      { bg: 'var(--aegean-700)',     bgH: 'var(--aegean-600)',     color: 'var(--papyrus-100)', border: '1px solid transparent' },
-  secondary:    { bg: 'var(--papyrus-500)',    bgH: 'var(--papyrus-400)',    color: 'var(--aegean-900)',  border: '1px solid transparent' },
-  ghost:        { bg: 'transparent',           bgH: 'var(--aegean-100)',     color: 'var(--aegean-700)',  border: '1px solid transparent' },
-  outline:      { bg: 'transparent',           bgH: 'var(--aegean-100)',     color: 'var(--aegean-700)',  border: '1px solid var(--aegean-700)' },
-  danger:       { bg: 'var(--terracotta-500)', bgH: 'var(--terracotta-600)', color: '#fff',               border: '1px solid transparent' },
-  'ghost-dark': { bg: 'transparent',           bgH: 'rgba(255,255,255,0.09)', color: 'var(--papyrus-300)', border: '1px solid transparent' },
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'outline' | 'danger' | 'ghost-dark';
+type ButtonSize = 'sm' | 'md' | 'lg';
+
+type VariantStyles = {
+  bg: string;
+  bgH: string;
+  color: string;
+  border: string;
 };
 
-const SIZES = {
-  sm: { fontSize: 'var(--text-sm)',   padding: '6px 14px' },
+const VARIANTS: Record<ButtonVariant, VariantStyles> = {
+  primary: { bg: 'var(--aegean-700)', bgH: 'var(--aegean-600)', color: 'var(--papyrus-100)', border: '1px solid transparent' },
+  secondary: { bg: 'var(--papyrus-500)', bgH: 'var(--papyrus-400)', color: 'var(--aegean-900)', border: '1px solid transparent' },
+  ghost: { bg: 'transparent', bgH: 'var(--aegean-100)', color: 'var(--aegean-700)', border: '1px solid transparent' },
+  outline: { bg: 'transparent', bgH: 'var(--aegean-100)', color: 'var(--aegean-700)', border: '1px solid var(--aegean-700)' },
+  danger: { bg: 'var(--terracotta-500)', bgH: 'var(--terracotta-600)', color: '#fff', border: '1px solid transparent' },
+  'ghost-dark': { bg: 'transparent', bgH: 'rgba(255,255,255,0.09)', color: 'var(--papyrus-300)', border: '1px solid transparent' },
+};
+
+const SIZES: Record<ButtonSize, CSSProperties> = {
+  sm: { fontSize: 'var(--text-sm)', padding: '6px 14px' },
   md: { fontSize: 'var(--text-base)', padding: '9px 20px' },
-  lg: { fontSize: 'var(--text-md)',   padding: '12px 28px' },
+  lg: { fontSize: 'var(--text-md)', padding: '12px 28px' },
+};
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  icon?: ReactNode;
+  iconRight?: ReactNode;
+  loading?: boolean;
+  fullWidth?: boolean;
 };
 
 export default function Button({
@@ -30,12 +49,12 @@ export default function Button({
   type = 'button',
   style,
   ...rest
-}) {
+}: ButtonProps) {
   const [hover, setHover] = useState(false);
   const [pressed, setPressed] = useState(false);
 
   const isDisabled = disabled || loading;
-  const v = VARIANTS[variant] || VARIANTS.primary;
+  const v = VARIANTS[variant];
 
   return (
     <button
@@ -43,7 +62,10 @@ export default function Button({
       disabled={isDisabled}
       onClick={isDisabled ? undefined : onClick}
       onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => { setHover(false); setPressed(false); }}
+      onMouseLeave={() => {
+        setHover(false);
+        setPressed(false);
+      }}
       onMouseDown={() => setPressed(true)}
       onMouseUp={() => setPressed(false)}
       style={{
@@ -67,7 +89,7 @@ export default function Button({
         transform: pressed && !isDisabled ? 'scale(0.97)' : 'scale(1)',
         transition: 'background 0.15s, transform 0.1s, opacity 0.15s',
         width: fullWidth ? '100%' : undefined,
-        ...(SIZES[size] || SIZES.md),
+        ...SIZES[size],
         ...style,
       }}
       {...rest}

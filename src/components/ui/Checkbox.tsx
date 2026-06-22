@@ -1,5 +1,17 @@
-export default function Checkbox({ label, checked, onChange, disabled = false, id, style }) {
-  const cid = id || (label ? 'cb-' + label.toLowerCase().replace(/\s+/g, '-') : undefined);
+import { useId, type ChangeEventHandler, type CSSProperties } from 'react';
+
+type CheckboxProps = {
+  label?: string;
+  checked: boolean;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  disabled?: boolean;
+  id?: string;
+  style?: CSSProperties;
+};
+
+export default function Checkbox({ label, checked, onChange, disabled = false, id, style }: CheckboxProps) {
+  const generatedId = useId();
+  const cid = id ?? (label ? `cb-${label.toLowerCase().replace(/\s+/g, '-')}` : generatedId);
 
   return (
     <label

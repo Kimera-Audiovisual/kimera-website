@@ -1,8 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import Image from 'next/image';
+import { useState, type CSSProperties, type MouseEventHandler } from 'react';
 
-export default function PosterCard({ title, genre, year, duration, src, rating, onClick, style }) {
+type PosterCardProps = {
+  title?: string;
+  genre?: string;
+  year?: string;
+  duration?: string;
+  src?: string;
+  rating?: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+  style?: CSSProperties;
+};
+
+export default function PosterCard({ title, genre, year, duration, src, rating, onClick, style }: PosterCardProps) {
   const [hover, setHover] = useState(false);
 
   return (
@@ -26,12 +38,13 @@ export default function PosterCard({ title, genre, year, duration, src, rating, 
         ...style,
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       {src && (
-        <img
+        <Image
           src={src}
-          alt={title || ''}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          alt={title ?? ''}
+          fill
+          sizes="(max-width: 768px) 50vw, 220px"
+          style={{ objectFit: 'cover' }}
         />
       )}
       <div
@@ -60,7 +73,9 @@ export default function PosterCard({ title, genre, year, duration, src, rating, 
             justifyContent: 'center',
           }}
         >
-          <svg width={20} height={20} viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+          <svg width={20} height={20} viewBox="0 0 24 24" fill="white">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
         </div>
       )}
       {rating && (

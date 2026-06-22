@@ -1,14 +1,15 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import { IC } from '@/components/icons';
 
 const FEATURES = [
-  { icon: IC.film(32),    title: 'Catálogo', desc: 'Curtas, documentários e obras audiovisuais reunidas em uma plataforma feita para artistas.' },
-  { icon: IC.network(32), title: 'Rede',     desc: 'Compartilhe ideias, troque referências e conecte-se com a comunidade audiovisual brasileira.' },
-  { icon: IC.user(32),    title: 'Perfil',   desc: 'Apresente seu trabalho e construa sua identidade como artista de forma profissional.' },
-];
+  { icon: IC.film(32), title: 'Catálogo', desc: 'Curtas, documentários e obras audiovisuais reunidas em uma plataforma feita para artistas.' },
+  { icon: IC.network(32), title: 'Rede', desc: 'Compartilhe ideias, troque referências e conecte-se com a comunidade audiovisual brasileira.' },
+  { icon: IC.user(32), title: 'Perfil', desc: 'Apresente seu trabalho e construa sua identidade como artista de forma profissional.' },
+] as const;
 
 export default function LandingPage() {
   const router = useRouter();
@@ -17,7 +18,6 @@ export default function LandingPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--aegean-950)', overflowY: 'auto' }}>
-      {/* Header */}
       <header
         style={{
           display: 'flex',
@@ -36,7 +36,6 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Hero */}
       <div style={{ padding: '80px 48px 60px', display: 'flex', alignItems: 'center', gap: 60, maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', color: 'var(--papyrus-600)', marginBottom: 16 }}>
@@ -57,7 +56,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Illustration panel */}
         <div
           style={{
             flexShrink: 0,
@@ -69,11 +67,13 @@ export default function LandingPage() {
             background: 'linear-gradient(135deg, var(--aegean-800), var(--aegean-900))',
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/assets/chimera-winged-lion.jpg"
             alt="Kimera"
-            style={{ width: '100%', height: '100%', objectFit: 'contain', padding: 32, filter: 'invert(1)', opacity: 0.18 }}
+            fill
+            priority
+            sizes="360px"
+            style={{ objectFit: 'contain', padding: 32, filter: 'invert(1)', opacity: 0.18 }}
           />
           <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ fontFamily: 'var(--font-display)', fontSize: 88, fontWeight: 900, letterSpacing: '0.12em', color: 'var(--papyrus-500)', opacity: 0.12, lineHeight: 1 }}>
@@ -89,13 +89,12 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Features */}
       <div style={{ padding: '0 48px 80px', maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(233,216,166,0.2), transparent)', marginBottom: 56 }} />
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {FEATURES.map((f, i) => (
+          {FEATURES.map((f) => (
             <div
-              key={i}
+              key={f.title}
               style={{
                 background: 'rgba(255,255,255,0.04)',
                 border: '1px solid rgba(233,216,166,0.10)',

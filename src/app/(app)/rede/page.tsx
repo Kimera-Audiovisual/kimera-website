@@ -1,14 +1,15 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import Button from '@/components/ui/Button';
 import PostCard from '@/components/ui/PostCard';
 import { IC } from '@/components/icons';
-import { POSTS } from '@/lib/data';
+import { POSTS, type Post } from '@/lib/data';
 
 export default function RedePage() {
   const [compose, setCompose] = useState('');
-  const [posts, setPosts] = useState(POSTS);
+  const [posts, setPosts] = useState<Post[]>(POSTS);
 
   const submit = () => {
     if (!compose.trim()) return;
@@ -36,7 +37,6 @@ export default function RedePage() {
           Rede
         </h1>
 
-        {/* Compose */}
         <div
           style={{
             background: 'var(--white)',
@@ -48,9 +48,8 @@ export default function RedePage() {
           }}
         >
           <div style={{ display: 'flex', gap: 12 }}>
-            <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://i.pravatar.cc/80?img=3" alt="Você" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
+              <Image src="https://i.pravatar.cc/80?img=3" alt="Você" fill sizes="40px" style={{ objectFit: 'cover' }} />
             </div>
             <div style={{ flex: 1 }}>
               <textarea
@@ -87,7 +86,6 @@ export default function RedePage() {
           </div>
         </div>
 
-        {/* Feed */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {posts.map((p) => (
             <PostCard key={p.id} author={p.author} authorHandle={p.handle} content={p.content} timestamp={p.time} likes={p.likes} comments={p.comments} tags={p.tags} liked={p.liked} />

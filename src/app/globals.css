@@ -2,7 +2,7 @@
    KIMERA AUDIOVISUAL — GLOBAL STYLES
    Design tokens: "Cinematic Antiquity" — Aegean blue, papyrus
    gold, terracotta pottery, ink black. Greek mythology mood.
-   Fonts loaded via next/font (see layout.js); family tokens map
+   Fonts loaded via next/font (see layout.tsx); family tokens map
    to the generated CSS variables.
    ============================================================ */
 

@@ -1,15 +1,16 @@
 # Kimera Audiovisual
 
-Rede social do audiovisual brasileiro — onde artistas e estudantes compartilham obras,
+Rede social do audiovisual brasileiro - onde artistas e estudantes compartilham obras,
 constroem redes e fazem história. Tema visual **"Cinematic Antiquity"** (azul Egeu, dourado
 papiro, terracota, preto cinema).
 
-Implementado em **Next.js (App Router) + React**, a partir do design system Kimera.
+Implementado em **Next.js (App Router) + React + TypeScript**, a partir do design system Kimera.
 
 ## Stack
 
-- **Next.js 14** (App Router, JavaScript)
+- **Next.js 14** (App Router, TypeScript)
 - **React 18**
+- **next/image** para imagens locais e remotas otimizadas
 - **next/font** (Cinzel, Cormorant Garamond, Mulish)
 - Design tokens em CSS custom properties (`src/app/globals.css`)
 
@@ -17,35 +18,47 @@ Implementado em **Next.js (App Router) + React**, a partir do design system Kime
 
 ```bash
 npm install
-npm run dev     # http://localhost:3000
-npm run build
-npm run start
+npm run dev        # http://localhost:3000
 npm run lint
+npm run typecheck
+npm run build
+npm run check      # lint + typecheck + build
+npm run start
 ```
+
+## Deploy na Vercel
+
+A Vercel detecta o projeto Next.js automaticamente. Use o build command padrão:
+
+```bash
+npm run build
+```
+
+O projeto declara Node `>=18.18.0`, compatível com Next.js 14.
 
 ## Estrutura
 
-```
+```text
 src/
 ├─ app/
-│  ├─ layout.js            # html, fontes, metadata
-│  ├─ globals.css          # design tokens + resets
-│  ├─ page.js              # Landing  (/)
-│  ├─ login/page.js        # Login    (/login)
-│  └─ (app)/               # área autenticada (shell com Sidebar)
-│     ├─ layout.js
-│     ├─ home/page.js      # /home
-│     ├─ catalogo/page.js  # /catalogo
-│     ├─ rede/page.js      # /rede
-│     └─ perfil/page.js    # /perfil
+│  ├─ layout.tsx            # html, fontes, metadata
+│  ├─ globals.css           # design tokens + resets
+│  ├─ page.tsx              # Landing  (/)
+│  ├─ login/page.tsx        # Login    (/login)
+│  └─ (app)/                # área autenticada (shell com Sidebar)
+│     ├─ layout.tsx
+│     ├─ home/page.tsx      # /home
+│     ├─ catalogo/page.tsx  # /catalogo
+│     ├─ rede/page.tsx      # /rede
+│     └─ perfil/page.tsx    # /perfil
 ├─ components/
-│  ├─ Sidebar.jsx          # navegação (route-aware)
-│  ├─ icons.jsx            # conjunto de ícones SVG
-│  └─ ui/                  # biblioteca de componentes
-│     ├─ Button.jsx  Badge.jsx  Input.jsx  Checkbox.jsx
-│     ├─ Tabs.jsx    PosterCard.jsx  PostCard.jsx
+│  ├─ Sidebar.tsx           # navegação (route-aware)
+│  ├─ icons.tsx             # conjunto de ícones SVG
+│  └─ ui/                   # biblioteca de componentes
+│     ├─ Button.tsx  Badge.tsx  Input.tsx  Checkbox.tsx
+│     ├─ Tabs.tsx    PosterCard.tsx  PostCard.tsx
 └─ lib/
-   └─ data.js              # dados mock (catálogo, feed, gêneros)
+   └─ data.ts               # dados mock tipados (catálogo, feed, gêneros)
 ```
 
 ## Notas
