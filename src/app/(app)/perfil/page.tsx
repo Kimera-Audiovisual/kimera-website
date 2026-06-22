@@ -8,6 +8,7 @@ import PosterCard from '@/components/ui/PosterCard';
 import PostCard from '@/components/ui/PostCard';
 import { IC } from '@/components/icons';
 import { POSTERS, POSTS } from '@/lib/data';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const STATS = [['24', 'Obras'], ['348', 'Seguidores'], ['102', 'Seguindo']] as const;
 
@@ -20,6 +21,7 @@ const ABOUT = [
 
 export default function PerfilPage() {
   const [tab, setTab] = useState(0);
+  const isMobile = useIsMobile();
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--surface-page)' }}>
@@ -35,8 +37,8 @@ export default function PerfilPage() {
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, transparent, var(--papyrus-600), transparent)' }} />
       </div>
 
-      <div style={{ maxWidth: 820, margin: '0 auto', padding: '0 32px' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 20, marginTop: -36, marginBottom: 24 }}>
+      <div style={{ maxWidth: 820, margin: '0 auto', padding: isMobile ? '0 16px' : '0 32px' }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'flex-end', gap: isMobile ? 12 : 20, marginTop: -36, marginBottom: 24 }}>
           <div
             style={{
               width: 88,
@@ -59,14 +61,14 @@ export default function PerfilPage() {
               @mariaoliveira · Documentarista · São Paulo, SP
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 10, paddingBottom: 6 }}>
+          <div style={{ display: 'flex', gap: 10, paddingBottom: 6, flexWrap: 'wrap' }}>
             <Button variant="outline" size="sm">Editar perfil</Button>
             <Button size="sm" icon={IC.bell(14)}>Notificações</Button>
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 32, marginBottom: 28, paddingBottom: 24, borderBottom: '1px solid var(--border-subtle)' }}>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--text-body)', lineHeight: 1.65, flex: 1, maxWidth: 460 }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 16 : 32, marginBottom: 28, paddingBottom: 24, borderBottom: '1px solid var(--border-subtle)' }}>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'var(--text-body)', lineHeight: 1.65, flex: 1, maxWidth: isMobile ? '100%' : 460 }}>
             Documentarista e educadora audiovisual. Trabalho com imagens desde 2016, acreditando que o cinema pode transformar a forma como vemos o mundo.
           </p>
           <div style={{ display: 'flex', gap: 24, flexShrink: 0 }}>
@@ -82,7 +84,7 @@ export default function PerfilPage() {
         <Tabs tabs={[{ label: 'Obras' }, { label: 'Publicações' }, { label: 'Sobre' }]} activeIndex={tab} onChange={setTab} variant="line" style={{ marginBottom: 24 }} />
 
         {tab === 0 && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, paddingBottom: 40 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 12, paddingBottom: 40 }}>
             {POSTERS.slice(0, 8).map((p) => (
               <PosterCard key={p.title} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
             ))}

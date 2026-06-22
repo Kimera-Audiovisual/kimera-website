@@ -6,8 +6,10 @@ import Button from '@/components/ui/Button';
 import PostCard from '@/components/ui/PostCard';
 import { IC } from '@/components/icons';
 import { POSTS, type Post } from '@/lib/data';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 export default function RedePage() {
+  const isMobile = useIsMobile();
   const [compose, setCompose] = useState('');
   const [posts, setPosts] = useState<Post[]>(POSTS);
 
@@ -32,7 +34,7 @@ export default function RedePage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--surface-page)' }}>
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: '32px 24px' }}>
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: isMobile ? '24px 16px' : '32px 24px' }}>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--aegean-900)', marginBottom: 20 }}>
           Rede
         </h1>

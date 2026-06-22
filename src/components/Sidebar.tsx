@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { IC } from '@/components/icons';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const ITEMS = [
   { href: '/home', label: 'Início', icon: IC.home },
@@ -18,6 +19,57 @@ export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [hover, setHover] = useState<NavHref | null>(null);
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <nav
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 64,
+          zIndex: 50,
+          display: 'flex',
+          justifyContent: 'space-around',
+          alignItems: 'stretch',
+          background: 'var(--aegean-950)',
+          borderTop: '1px solid rgba(233,216,166,0.12)',
+        }}
+      >
+        {ITEMS.map((item) => {
+          const active = pathname === item.href;
+          return (
+            <button
+              key={item.href}
+              onClick={() => router.push(item.href)}
+              style={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                border: 'none',
+                cursor: 'pointer',
+                background: 'transparent',
+                color: active ? 'var(--papyrus-300)' : 'var(--ink-300)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: 10,
+                fontWeight: active ? 700 : 500,
+                letterSpacing: '0.03em',
+                padding: '6px 0',
+              }}
+            >
+              <span style={{ opacity: active ? 1 : 0.7, display: 'flex' }}>{item.icon()}</span>
+              {item.label}
+            </button>
+          );
+        })}
+      </nav>
+    );
+  }
 
   return (
     <nav

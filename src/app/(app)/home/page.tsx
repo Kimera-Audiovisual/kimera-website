@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import PosterCard from '@/components/ui/PosterCard';
 import PostCard from '@/components/ui/PostCard';
 import { POSTERS, POSTS } from '@/lib/data';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const STATS = [
   ['24', 'Obras no catálogo', 'var(--aegean-700)'],
@@ -13,10 +14,11 @@ const STATS = [
 
 export default function HomePage() {
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--surface-page)' }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '36px 32px' }}>
+      <div style={{ maxWidth: 900, margin: '0 auto', padding: isMobile ? '24px 16px' : '36px 32px' }}>
         <div style={{ marginBottom: 32 }}>
           <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', color: 'var(--text-muted)', marginBottom: 6 }}>
             DOMINGO, 22 DE JUNHO
@@ -29,7 +31,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 36 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 14, marginBottom: 36 }}>
           {STATS.map(([n, l, c]) => (
             <div
               key={l}
@@ -59,7 +61,7 @@ export default function HomePage() {
               Ver tudo →
             </button>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 12 }}>
             {POSTERS.slice(0, 4).map((p) => (
               <PosterCard key={p.title} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
             ))}

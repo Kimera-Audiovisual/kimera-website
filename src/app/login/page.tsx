@@ -6,9 +6,11 @@ import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Checkbox from '@/components/ui/Checkbox';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 export default function LoginPage() {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -16,11 +18,11 @@ export default function LoginPage() {
   const onLogin = () => router.push('/home');
 
   return (
-    <div style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: '1fr 1fr', background: 'var(--surface-page)' }}>
+    <div style={{ minHeight: '100vh', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', background: 'var(--surface-page)' }}>
       <div
         style={{
+          display: isMobile ? 'none' : 'flex',
           background: 'linear-gradient(160deg, var(--aegean-900) 0%, var(--aegean-700) 100%)',
-          display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
@@ -54,7 +56,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 48 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: isMobile ? 24 : 48 }}>
         <div style={{ width: '100%', maxWidth: 380 }}>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--aegean-900)', marginBottom: 6 }}>
             Bem-vindo de volta

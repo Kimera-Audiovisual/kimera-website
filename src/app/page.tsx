@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import { IC } from '@/components/icons';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 const FEATURES = [
   { icon: IC.film(32), title: 'Catálogo', desc: 'Curtas, documentários e obras audiovisuais reunidas em uma plataforma feita para artistas.' },
@@ -13,6 +14,7 @@ const FEATURES = [
 
 export default function LandingPage() {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const onEnter = () => router.push('/login');
   const onRegister = () => router.push('/home');
 
@@ -23,7 +25,7 @@ export default function LandingPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px 48px',
+          padding: isMobile ? '16px 20px' : '20px 48px',
           borderBottom: '1px solid rgba(233,216,166,0.10)',
         }}
       >
@@ -36,19 +38,19 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <div style={{ padding: '80px 48px 60px', display: 'flex', alignItems: 'center', gap: 60, maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ padding: isMobile ? '40px 20px 40px' : '80px 48px 60px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', gap: isMobile ? 32 : 60, maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', color: 'var(--papyrus-600)', marginBottom: 16 }}>
             REDE SOCIAL · AUDIOVISUAL
           </div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 64, fontWeight: 900, letterSpacing: '0.08em', color: 'var(--papyrus-300)', lineHeight: 1.05, marginBottom: 20 }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: isMobile ? 40 : 64, fontWeight: 900, letterSpacing: '0.08em', color: 'var(--papyrus-300)', lineHeight: 1.05, marginBottom: 20 }}>
             Sua obra<br />merece<br />ser vista.
           </h1>
           <div style={{ height: 2, width: 80, background: 'linear-gradient(90deg, var(--papyrus-600), transparent)', marginBottom: 24 }} />
-          <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 20, color: 'var(--ink-300)', lineHeight: 1.65, marginBottom: 36, maxWidth: 440 }}>
+          <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: isMobile ? 16 : 20, color: 'var(--ink-300)', lineHeight: 1.65, marginBottom: 36, maxWidth: 440 }}>
             A Kimera é a plataforma onde artistas e estudantes de audiovisual compartilham obras, constroem redes e fazem história.
           </p>
-          <div style={{ display: 'flex', gap: 12 }}>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Button size="lg" onClick={onRegister}>Criar conta gratuita</Button>
             <Button variant="outline" size="lg" onClick={onEnter} style={{ borderColor: 'rgba(233,216,166,0.4)', color: 'var(--papyrus-400)' }}>
               Explorar catálogo
@@ -59,8 +61,9 @@ export default function LandingPage() {
         <div
           style={{
             flexShrink: 0,
-            width: 360,
-            height: 400,
+            width: isMobile ? '100%' : 360,
+            maxWidth: 360,
+            height: isMobile ? 300 : 400,
             borderRadius: 'var(--radius-xl)',
             overflow: 'hidden',
             position: 'relative',
@@ -89,9 +92,9 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <div style={{ padding: '0 48px 80px', maxWidth: 1100, margin: '0 auto' }}>
-        <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(233,216,166,0.2), transparent)', marginBottom: 56 }} />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+      <div style={{ padding: isMobile ? '0 20px 56px' : '0 48px 80px', maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, rgba(233,216,166,0.2), transparent)', marginBottom: isMobile ? 36 : 56 }} />
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 20 }}>
           {FEATURES.map((f) => (
             <div
               key={f.title}

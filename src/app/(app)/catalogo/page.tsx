@@ -8,8 +8,10 @@ import Tabs from '@/components/ui/Tabs';
 import PosterCard from '@/components/ui/PosterCard';
 import { IC } from '@/components/icons';
 import { GENRES, POSTERS, type PosterGenre } from '@/lib/data';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 export default function CatalogoPage() {
+  const isMobile = useIsMobile();
   const [genre, setGenre] = useState(0);
   const selectedGenre = GENRES[genre];
   const filtered = selectedGenre === 'Tudo' ? POSTERS : POSTERS.filter((p) => p.genre === (selectedGenre as PosterGenre));
@@ -17,7 +19,7 @@ export default function CatalogoPage() {
 
   return (
     <div style={{ flex: 1, overflowY: 'auto', background: 'var(--ink-950)' }}>
-      <div style={{ position: 'relative', height: 280, overflow: 'hidden' }}>
+      <div style={{ position: 'relative', height: isMobile ? 220 : 280, overflow: 'hidden' }}>
         <Image
           src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80"
           alt="Destaque"
@@ -27,15 +29,15 @@ export default function CatalogoPage() {
           style={{ objectFit: 'cover' }}
         />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(12,15,21,0.95) 0%, rgba(12,15,21,0.5) 60%, transparent 100%)' }} />
-        <div style={{ position: 'absolute', bottom: 32, left: 40 }}>
+        <div style={{ position: 'absolute', bottom: isMobile ? 20 : 32, left: isMobile ? 16 : 40, right: isMobile ? 16 : undefined }}>
           <Badge variant="terracotta" style={{ marginBottom: 10 }}>DESTAQUE</Badge>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 38, fontWeight: 800, letterSpacing: '0.06em', color: 'var(--papyrus-200)', lineHeight: 1.1, marginBottom: 10 }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: isMobile ? 26 : 38, fontWeight: 800, letterSpacing: '0.06em', color: 'var(--papyrus-200)', lineHeight: 1.1, marginBottom: 10 }}>
             O Mar de Dentro
           </h1>
-          <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: 16, color: 'var(--ink-300)', lineHeight: 1.6, maxWidth: 420, marginBottom: 18 }}>
+          <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: isMobile ? 14 : 16, color: 'var(--ink-300)', lineHeight: 1.6, maxWidth: isMobile ? '100%' : 420, marginBottom: 18 }}>
             Uma viagem documental pelo Mediterrâneo em busca de memórias que o oceano guarda.
           </p>
-          <div style={{ display: 'flex', gap: 10 }}>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <Button icon={IC.play(16)} size="md">Assistir agora</Button>
             <Button variant="outline" size="md" style={{ borderColor: 'rgba(233,216,166,0.35)', color: 'var(--papyrus-300)' }}>
               + Minha lista
@@ -44,17 +46,17 @@ export default function CatalogoPage() {
         </div>
       </div>
 
-      <div style={{ padding: '28px 32px' }}>
-        <div style={{ marginBottom: 24 }}>
+      <div style={{ padding: isMobile ? '24px 16px' : '28px 32px' }}>
+        <div style={{ marginBottom: 24, overflowX: isMobile ? 'auto' : 'visible' }}>
           <Tabs
             tabs={GENRES.map((g) => ({ label: g }))}
             activeIndex={genre}
             onChange={setGenre}
             variant="line"
-            style={{ borderBottomColor: 'rgba(255,255,255,0.12)' }}
+            style={{ borderBottomColor: 'rgba(255,255,255,0.12)', width: isMobile ? 'max-content' : undefined, minWidth: '100%' }}
           />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 14 }}>
           {visible.map((p) => (
             <PosterCard key={p.title} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
           ))}
