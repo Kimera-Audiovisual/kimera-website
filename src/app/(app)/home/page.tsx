@@ -4,64 +4,53 @@ import { useRouter } from 'next/navigation';
 import PosterCard from '@/components/ui/PosterCard';
 import PostCard from '@/components/ui/PostCard';
 import { POSTERS, POSTS } from '@/lib/data';
-import { useIsMobile } from '@/hooks/useIsMobile';
 
 const STATS = [
-  ['24', 'Obras no catálogo', 'var(--aegean-700)'],
-  ['348', 'Seguidores', 'var(--terracotta-500)'],
-  ['1.2k', 'Visualizações', 'var(--papyrus-600)'],
+  ['24', 'Obras no catálogo', 'text-aegean-700'],
+  ['348', 'Seguidores', 'text-terracotta-500'],
+  ['1.2k', 'Visualizações', 'text-papyrus-600'],
 ] as const;
 
 export default function HomePage() {
   const router = useRouter();
-  const isMobile = useIsMobile();
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto', background: 'var(--surface-page)' }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: isMobile ? '24px 16px' : '36px 32px' }}>
-        <div style={{ marginBottom: 32 }}>
-          <div style={{ fontFamily: 'var(--font-sans)', fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', color: 'var(--text-muted)', marginBottom: 6 }}>
+    <div className="flex-1 overflow-y-auto bg-page">
+      <div className="max-w-[900px] mx-auto px-4 py-6 md:px-8 md:py-9">
+        <div className="mb-8">
+          <div className="font-sans text-[12px] font-bold tracking-[0.12em] text-muted mb-[6px]">
             DOMINGO, 22 DE JUNHO
           </div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 34, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--aegean-900)', marginBottom: 6 }}>
+          <h1 className="font-display text-[34px] font-bold tracking-[0.06em] text-aegean-900 mb-[6px]">
             Bem-vinda, Maria.
           </h1>
-          <p style={{ fontFamily: 'var(--font-sans)', fontSize: 15, color: 'var(--text-muted)' }}>
+          <p className="font-sans text-[15px] text-muted">
             3 novos conteúdos no catálogo · 12 novas publicações na Rede
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 14, marginBottom: 36 }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px] mb-9">
           {STATS.map(([n, l, c]) => (
-            <div
-              key={l}
-              style={{
-                background: 'var(--white)',
-                borderRadius: 'var(--radius-card)',
-                border: '1px solid var(--border-subtle)',
-                padding: '20px 22px',
-                boxShadow: 'var(--shadow-xs)',
-              }}
-            >
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: 32, fontWeight: 700, color: c, letterSpacing: '0.04em', lineHeight: 1 }}>{n}</div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'var(--text-muted)', marginTop: 6 }}>{l}</div>
+            <div key={l} className="bg-white rounded-card border border-subtle px-[22px] py-5 shadow-xs">
+              <div className={['font-display text-[32px] font-bold tracking-[0.04em] leading-none', c].join(' ')}>{n}</div>
+              <div className="font-sans text-[13px] text-muted mt-[6px]">{l}</div>
             </div>
           ))}
         </div>
 
-        <div style={{ marginBottom: 36 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600, letterSpacing: '0.06em', color: 'var(--aegean-900)' }}>
+        <div className="mb-9">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display text-[20px] font-semibold tracking-[0.06em] text-aegean-900">
               Destaques do Catálogo
             </h2>
             <button
               onClick={() => router.push('/catalogo')}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: 'var(--aegean-500)', letterSpacing: '0.04em' }}
+              className="bg-none border-0 cursor-pointer font-sans text-[13px] font-semibold text-aegean-500 tracking-[0.04em]"
             >
               Ver tudo →
             </button>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 12 }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {POSTERS.slice(0, 4).map((p) => (
               <PosterCard key={p.title} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
             ))}
@@ -69,18 +58,18 @@ export default function HomePage() {
         </div>
 
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600, letterSpacing: '0.06em', color: 'var(--aegean-900)' }}>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display text-[20px] font-semibold tracking-[0.06em] text-aegean-900">
               Publicações Recentes
             </h2>
             <button
               onClick={() => router.push('/rede')}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 600, color: 'var(--aegean-500)', letterSpacing: '0.04em' }}
+              className="bg-none border-0 cursor-pointer font-sans text-[13px] font-semibold text-aegean-500 tracking-[0.04em]"
             >
               Ver rede →
             </button>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div className="flex flex-col gap-3">
             {POSTS.slice(0, 2).map((p) => (
               <PostCard key={p.id} author={p.author} authorHandle={p.handle} content={p.content} timestamp={p.time} likes={p.likes} comments={p.comments} tags={p.tags} liked={p.liked} />
             ))}

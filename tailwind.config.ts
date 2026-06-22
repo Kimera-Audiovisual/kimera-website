@@ -1,0 +1,138 @@
+import type { Config } from 'tailwindcss';
+
+/**
+ * Tokens "Cinematic Antiquity" vivem como CSS vars em globals.css (:root).
+ * Aqui apenas mapeamos os utilitarios do Tailwind para essas vars, mantendo
+ * o CSS como fonte unica da verdade.
+ */
+const config: Config = {
+  content: ['./src/**/*.{ts,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        white: 'var(--white)',
+        aegean: {
+          950: 'var(--aegean-950)',
+          900: 'var(--aegean-900)',
+          800: 'var(--aegean-800)',
+          700: 'var(--aegean-700)',
+          600: 'var(--aegean-600)',
+          500: 'var(--aegean-500)',
+          400: 'var(--aegean-400)',
+          300: 'var(--aegean-300)',
+          200: 'var(--aegean-200)',
+          100: 'var(--aegean-100)',
+        },
+        papyrus: {
+          700: 'var(--papyrus-700)',
+          600: 'var(--papyrus-600)',
+          500: 'var(--papyrus-500)',
+          400: 'var(--papyrus-400)',
+          300: 'var(--papyrus-300)',
+          200: 'var(--papyrus-200)',
+          100: 'var(--papyrus-100)',
+        },
+        terracotta: {
+          700: 'var(--terracotta-700)',
+          600: 'var(--terracotta-600)',
+          500: 'var(--terracotta-500)',
+          400: 'var(--terracotta-400)',
+          200: 'var(--terracotta-200)',
+        },
+        ink: {
+          950: 'var(--ink-950)',
+          900: 'var(--ink-900)',
+          800: 'var(--ink-800)',
+          700: 'var(--ink-700)',
+          600: 'var(--ink-600)',
+          500: 'var(--ink-500)',
+          400: 'var(--ink-400)',
+          300: 'var(--ink-300)',
+          200: 'var(--ink-200)',
+          100: 'var(--ink-100)',
+          50: 'var(--ink-50)',
+        },
+        laurel: { 500: 'var(--laurel-500)', 100: 'var(--laurel-100)' },
+        amber: { 500: 'var(--amber-500)', 100: 'var(--amber-100)' },
+        danger: { 500: 'var(--danger-500)', 100: 'var(--danger-100)' },
+        info: { 500: 'var(--info-500)', 100: 'var(--info-100)' },
+        // Semanticos
+        page: 'var(--surface-page)',
+        sunken: 'var(--surface-sunken)',
+        strong: 'var(--text-strong)',
+        body: 'var(--text-body)',
+        muted: 'var(--text-muted)',
+        faint: 'var(--text-faint)',
+        link: 'var(--text-link)',
+      },
+      fontFamily: {
+        display: 'var(--font-display)',
+        serif: 'var(--font-serif)',
+        sans: 'var(--font-sans)',
+        mono: 'var(--font-mono)',
+      },
+      fontSize: {
+        xs: 'var(--text-xs)',
+        sm: 'var(--text-sm)',
+        base: 'var(--text-base)',
+        md: 'var(--text-md)',
+        lg: 'var(--text-lg)',
+        xl: 'var(--text-xl)',
+        '2xl': 'var(--text-2xl)',
+        '3xl': 'var(--text-3xl)',
+        '4xl': 'var(--text-4xl)',
+        '5xl': 'var(--text-5xl)',
+        '6xl': 'var(--text-6xl)',
+      },
+      letterSpacing: {
+        tight: 'var(--tracking-tight)',
+        normal: 'var(--tracking-normal)',
+        wide: 'var(--tracking-wide)',
+        wider: 'var(--tracking-wider)',
+        widest: 'var(--tracking-widest)',
+        logo: 'var(--tracking-logo)',
+      },
+      lineHeight: {
+        tight: 'var(--leading-tight)',
+        snug: 'var(--leading-snug)',
+        normal: 'var(--leading-normal)',
+        relaxed: 'var(--leading-relaxed)',
+        loose: 'var(--leading-loose)',
+      },
+      borderRadius: {
+        none: 'var(--radius-none)',
+        xs: 'var(--radius-xs)',
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        '2xl': 'var(--radius-2xl)',
+        full: 'var(--radius-full)',
+        btn: 'var(--radius-btn)',
+        card: 'var(--radius-card)',
+        input: 'var(--radius-input)',
+        poster: 'var(--radius-poster)',
+      },
+      boxShadow: {
+        xs: 'var(--shadow-xs)',
+        sm: 'var(--shadow-sm)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+        xl: 'var(--shadow-xl)',
+        '2xl': 'var(--shadow-2xl)',
+        'cinema-sm': 'var(--shadow-cinema-sm)',
+        'cinema-md': 'var(--shadow-cinema-md)',
+        'cinema-lg': 'var(--shadow-cinema-lg)',
+        poster: 'var(--shadow-poster)',
+      },
+      borderColor: {
+        subtle: 'var(--border-subtle)',
+        default: 'var(--border-default)',
+        strong: 'var(--border-strong)',
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;

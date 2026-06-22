@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, type CSSProperties, type MouseEventHandler } from 'react';
+import type { CSSProperties, MouseEventHandler } from 'react';
 
 type PosterCardProps = {
   title?: string;
@@ -11,105 +11,49 @@ type PosterCardProps = {
   src?: string;
   rating?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  className?: string;
   style?: CSSProperties;
 };
 
-export default function PosterCard({ title, genre, year, duration, src, rating, onClick, style }: PosterCardProps) {
-  const [hover, setHover] = useState(false);
-
+export default function PosterCard({ title, genre, year, duration, src, rating, onClick, className, style }: PosterCardProps) {
   return (
     <div
       onClick={onClick}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      style={{
-        position: 'relative',
-        borderRadius: 'var(--radius-poster)',
-        overflow: 'hidden',
-        cursor: 'pointer',
-        width: '100%',
-        aspectRatio: '2/3',
-        background: 'var(--ink-800)',
-        boxShadow: hover
-          ? '0 12px 40px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.30)'
-          : '0 4px 20px rgba(0,0,0,0.40)',
-        transform: hover ? 'translateY(-8px) scale(1.03)' : 'translateY(0) scale(1)',
-        transition: 'transform 0.22s ease-out, box-shadow 0.22s ease-out',
-        ...style,
-      }}
+      className={[
+        'group relative rounded-poster overflow-hidden cursor-pointer w-full aspect-[2/3] bg-ink-800',
+        'shadow-cinema-md hover:shadow-poster transition-[transform,box-shadow] duration-[220ms] ease-out',
+        'hover:-translate-y-2 hover:scale-[1.03]',
+        className ?? '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={style}
     >
-      {src && (
-        <Image
-          src={src}
-          alt={title ?? ''}
-          fill
-          sizes="(max-width: 768px) 50vw, 220px"
-          style={{ objectFit: 'cover' }}
-        />
-      )}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to top, rgba(12,15,21,0.92) 0%, rgba(12,15,21,0.4) 50%, transparent 100%)',
-          opacity: hover ? 1 : 0.75,
-          transition: 'opacity 0.22s',
-        }}
-      />
-      {hover && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 48,
-            height: 48,
-            borderRadius: '50%',
-            background: 'rgba(255,255,255,0.18)',
-            backdropFilter: 'blur(6px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <svg width={20} height={20} viewBox="0 0 24 24" fill="white">
-            <polygon points="5 3 19 12 5 21 5 3" />
-          </svg>
-        </div>
-      )}
+      {src && <Image src={src} alt={title ?? ''} fill sizes="(max-width: 768px) 50vw, 220px" className="object-cover" />}
+      <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(12,15,21,0.92)_0%,rgba(12,15,21,0.4)_50%,transparent_100%)] opacity-75 group-hover:opacity-100 transition-opacity duration-[220ms]" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/[0.18] backdrop-blur-[6px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-[220ms]">
+        <svg width={20} height={20} viewBox="0 0 24 24" fill="white">
+          <polygon points="5 3 19 12 5 21 5 3" />
+        </svg>
+      </div>
       {rating && (
-        <div
-          style={{
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            background: 'var(--papyrus-600)',
-            color: 'var(--aegean-950)',
-            fontFamily: 'var(--font-sans)',
-            fontSize: 10,
-            fontWeight: 800,
-            padding: '2px 7px',
-            borderRadius: 'var(--radius-sm)',
-            letterSpacing: '0.06em',
-          }}
-        >
+        <div className="absolute top-2 right-2 bg-papyrus-600 text-aegean-950 font-sans text-[10px] font-extrabold px-[7px] py-[2px] rounded-sm tracking-[0.06em]">
           ★ {rating}
         </div>
       )}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px 10px 10px' }}>
+      <div className="absolute bottom-0 left-0 right-0 px-[10px] pt-3 pb-[10px]">
         {genre && (
-          <div style={{ fontFamily: 'var(--font-sans)', fontSize: 9, fontWeight: 800, letterSpacing: '0.12em', color: 'var(--papyrus-600)', textTransform: 'uppercase', marginBottom: 3 }}>
+          <div className="font-sans text-[9px] font-extrabold tracking-[0.12em] text-papyrus-600 uppercase mb-[3px]">
             {genre}
           </div>
         )}
         {title && (
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', color: 'var(--papyrus-100)', lineHeight: 1.25 }}>
+          <div className="font-display text-[13px] font-bold tracking-wide text-papyrus-100 leading-snug">
             {title}
           </div>
         )}
         {(year || duration) && (
-          <div style={{ fontFamily: 'var(--font-sans)', fontSize: 10, color: 'var(--ink-300)', marginTop: 3 }}>
+          <div className="font-sans text-[10px] text-ink-300 mt-[3px]">
             {[year, duration].filter(Boolean).join(' · ')}
           </div>
         )}

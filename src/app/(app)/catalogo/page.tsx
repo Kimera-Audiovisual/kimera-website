@@ -8,36 +8,34 @@ import Tabs from '@/components/ui/Tabs';
 import PosterCard from '@/components/ui/PosterCard';
 import { IC } from '@/components/icons';
 import { GENRES, POSTERS, type PosterGenre } from '@/lib/data';
-import { useIsMobile } from '@/hooks/useIsMobile';
 
 export default function CatalogoPage() {
-  const isMobile = useIsMobile();
   const [genre, setGenre] = useState(0);
   const selectedGenre = GENRES[genre];
   const filtered = selectedGenre === 'Tudo' ? POSTERS : POSTERS.filter((p) => p.genre === (selectedGenre as PosterGenre));
   const visible = filtered.length ? filtered : POSTERS;
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto', background: 'var(--ink-950)' }}>
-      <div style={{ position: 'relative', height: isMobile ? 220 : 280, overflow: 'hidden' }}>
+    <div className="flex-1 overflow-y-auto bg-ink-950">
+      <div className="relative h-[220px] md:h-[280px] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&q=80"
+          src="/assets/destaque.png"
           alt="Destaque"
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 1200px"
-          style={{ objectFit: 'cover' }}
+          className="object-cover"
         />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(12,15,21,0.95) 0%, rgba(12,15,21,0.5) 60%, transparent 100%)' }} />
-        <div style={{ position: 'absolute', bottom: isMobile ? 20 : 32, left: isMobile ? 16 : 40, right: isMobile ? 16 : undefined }}>
-          <Badge variant="terracotta" style={{ marginBottom: 10 }}>DESTAQUE</Badge>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: isMobile ? 26 : 38, fontWeight: 800, letterSpacing: '0.06em', color: 'var(--papyrus-200)', lineHeight: 1.1, marginBottom: 10 }}>
-            O Mar de Dentro
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(12,15,21,0.95)_0%,rgba(12,15,21,0.5)_60%,transparent_100%)]" />
+        <div className="absolute bottom-5 left-4 right-4 md:bottom-8 md:left-10 md:right-auto">
+          <Badge variant="terracotta" className="mb-[10px]">DESTAQUE</Badge>
+          <h1 className="font-display text-[26px] md:text-[38px] font-extrabold tracking-[0.06em] text-papyrus-200 leading-[1.1] mb-[10px]">
+            Olho por Olho
           </h1>
-          <p style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: isMobile ? 14 : 16, color: 'var(--ink-300)', lineHeight: 1.6, maxWidth: isMobile ? '100%' : 420, marginBottom: 18 }}>
-            Uma viagem documental pelo Mediterrâneo em busca de memórias que o oceano guarda.
+          <p className="font-serif italic text-[14px] md:text-[16px] text-ink-300 leading-relaxed max-w-full md:max-w-[420px] mb-[18px]">
+            “Quando a urgência do agora anula o seus sentidos de pensamento, uma jovem não se vê em outra posição a não ser vender tudo o que lhe resta - dignidade”.
           </p>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <div className="flex gap-[10px] flex-wrap">
             <Button icon={IC.play(16)} size="md">Assistir agora</Button>
             <Button variant="outline" size="md" style={{ borderColor: 'rgba(233,216,166,0.35)', color: 'var(--papyrus-300)' }}>
               + Minha lista
@@ -46,17 +44,18 @@ export default function CatalogoPage() {
         </div>
       </div>
 
-      <div style={{ padding: isMobile ? '24px 16px' : '28px 32px' }}>
-        <div style={{ marginBottom: 24, overflowX: isMobile ? 'auto' : 'visible' }}>
+      <div className="px-4 py-6 md:px-8 md:py-7">
+        <div className="mb-6 overflow-x-auto md:overflow-visible">
           <Tabs
             tabs={GENRES.map((g) => ({ label: g }))}
             activeIndex={genre}
             onChange={setGenre}
             variant="line"
-            style={{ borderBottomColor: 'rgba(255,255,255,0.12)', width: isMobile ? 'max-content' : undefined, minWidth: '100%' }}
+            className="w-max min-w-full md:w-auto"
+            style={{ borderBottomColor: 'rgba(255,255,255,0.12)' }}
           />
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)', gap: 14 }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-[14px]">
           {visible.map((p) => (
             <PosterCard key={p.title} title={p.title} genre={p.genre} year={p.year} duration={p.dur} rating={p.rating} src={p.src} />
           ))}

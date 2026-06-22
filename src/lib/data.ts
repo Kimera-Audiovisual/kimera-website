@@ -2,12 +2,12 @@
 
 export const GENRES = [
   'Tudo',
-  'Documentário',
-  'Curta-Metragem',
+  'Terror',
+  'Terror Psicológico',
   'Drama',
-  'Ficção',
-  'Experimental',
-  'Animação',
+  'Ficção, Sci-fi e Terror',
+  'Experimental e Romance',
+  'Horror',
 ] as const;
 
 export type Genre = (typeof GENRES)[number];
@@ -35,14 +35,12 @@ export type Post = {
 };
 
 export const POSTERS: Poster[] = [
-  { title: 'O Mar de Dentro', genre: 'Documentário', year: '2024', dur: '18 min', rating: '8.7', src: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=220&q=80' },
-  { title: 'Velas ao Vento', genre: 'Curta-Metragem', year: '2023', dur: '12 min', rating: '7.9', src: 'https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=220&q=80' },
-  { title: 'Silêncio Fértil', genre: 'Ficção', year: '2024', dur: '24 min', rating: '9.0', src: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=220&q=80' },
-  { title: 'Fragmentos', genre: 'Experimental', year: '2023', dur: '8 min', rating: '9.1', src: 'https://images.unsplash.com/photo-1518715303843-586e350560cc?w=220&q=80' },
-  { title: 'Luz Própria', genre: 'Drama', year: '2024', dur: '31 min', rating: '8.3', src: 'https://images.unsplash.com/photo-1493804714600-6edb1cd93080?w=220&q=80' },
-  { title: 'Memória do Vento', genre: 'Documentário', year: '2023', dur: '42 min', rating: '8.5', src: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=220&q=80' },
-  { title: 'Ritual', genre: 'Curta-Metragem', year: '2024', dur: '14 min', rating: '7.6', src: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=220&q=80' },
-  { title: 'Deriva', genre: 'Ficção', year: '2024', dur: '19 min', rating: '8.8', src: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=220&q=80' },
+  { title: 'Por Favor, Goste de Mim', genre: 'Terror', year: '2025', dur: '1.49 min', rating: '8.7', src: '/assets/curta1.png' },
+  { title: 'Olho por olho', genre: 'Ficção, Sci-fi e Terror', year: '2025', dur: '4.40 min', rating: '9.4', src: '/assets/curta2.png' },
+  { title: 'PRESENTE', genre: 'Experimental e Romance', year: '2026', dur: '1.30 min', rating: '9.0', src: '/assets/curta3.png' },
+  { title: 'Mors Desiderat', genre: 'Horror', year: '2026', dur: '1 min', rating: '9.1', src: '/assets/curta4.png' },
+  { title: 'FAMINTA', genre: 'Terror Psicológico', year: '2026', dur: '1 min', rating: '8.3', src: '/assets/curta5.png' },
+  { title: 'Ruína', genre: 'Drama', year: '2026', dur: '1 min', rating: '8.6', src: '/assets/curta6.png' },
 ];
 
 export const POSTS: Post[] = [

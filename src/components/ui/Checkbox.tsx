@@ -6,28 +6,25 @@ type CheckboxProps = {
   onChange: ChangeEventHandler<HTMLInputElement>;
   disabled?: boolean;
   id?: string;
+  className?: string;
   style?: CSSProperties;
 };
 
-export default function Checkbox({ label, checked, onChange, disabled = false, id, style }: CheckboxProps) {
+export default function Checkbox({ label, checked, onChange, disabled = false, id, className, style }: CheckboxProps) {
   const generatedId = useId();
   const cid = id ?? (label ? `cb-${label.toLowerCase().replace(/\s+/g, '-')}` : generatedId);
 
   return (
     <label
       htmlFor={cid}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 10,
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        opacity: disabled ? 0.5 : 1,
-        userSelect: 'none',
-        fontFamily: 'var(--font-sans)',
-        fontSize: 'var(--text-base)',
-        color: 'var(--text-body)',
-        ...style,
-      }}
+      className={[
+        'inline-flex items-center gap-[10px] select-none font-sans text-base text-body',
+        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+        className ?? '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={style}
     >
       <input
         type="checkbox"
@@ -35,21 +32,13 @@ export default function Checkbox({ label, checked, onChange, disabled = false, i
         checked={checked}
         onChange={onChange}
         disabled={disabled}
-        style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
+        className="absolute opacity-0 w-0 h-0"
       />
       <span
-        style={{
-          width: 18,
-          height: 18,
-          borderRadius: 'var(--radius-xs)',
-          flexShrink: 0,
-          border: `2px solid ${checked ? 'var(--aegean-700)' : 'var(--border-default)'}`,
-          background: checked ? 'var(--aegean-700)' : 'var(--white)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'all 0.15s',
-        }}
+        className={[
+          'w-[18px] h-[18px] rounded-xs shrink-0 border-2 flex items-center justify-center transition-all duration-150',
+          checked ? 'border-aegean-700 bg-aegean-700' : 'border-default bg-white',
+        ].join(' ')}
       >
         {checked && (
           <svg width={11} height={9} viewBox="0 0 11 9" fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">

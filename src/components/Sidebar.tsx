@@ -1,10 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { IC } from '@/components/icons';
-import { useIsMobile } from '@/hooks/useIsMobile';
 
 const ITEMS = [
   { href: '/home', label: 'Início', icon: IC.home },
@@ -13,165 +11,82 @@ const ITEMS = [
   { href: '/perfil', label: 'Perfil', icon: IC.user },
 ] as const;
 
-type NavHref = (typeof ITEMS)[number]['href'];
-
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [hover, setHover] = useState<NavHref | null>(null);
-  const isMobile = useIsMobile();
 
-  if (isMobile) {
-    return (
-      <nav
-        style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 64,
-          zIndex: 50,
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'stretch',
-          background: 'var(--aegean-950)',
-          borderTop: '1px solid rgba(233,216,166,0.12)',
-        }}
-      >
+  return (
+    <>
+      {/* Mobile: barra inferior fixa */}
+      <nav className="fixed bottom-0 left-0 right-0 h-16 z-50 flex justify-around items-stretch bg-aegean-950 border-t border-t-[rgba(233,216,166,0.12)] md:hidden">
         {ITEMS.map((item) => {
           const active = pathname === item.href;
           return (
             <button
               key={item.href}
               onClick={() => router.push(item.href)}
-              style={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 3,
-                border: 'none',
-                cursor: 'pointer',
-                background: 'transparent',
-                color: active ? 'var(--papyrus-300)' : 'var(--ink-300)',
-                fontFamily: 'var(--font-sans)',
-                fontSize: 10,
-                fontWeight: active ? 700 : 500,
-                letterSpacing: '0.03em',
-                padding: '6px 0',
-              }}
+              className={[
+                'flex-1 flex flex-col items-center justify-center gap-[3px] border-0 cursor-pointer bg-transparent',
+                'font-sans text-[10px] tracking-[0.03em] py-[6px]',
+                active ? 'text-papyrus-300 font-bold' : 'text-ink-300 font-medium',
+              ].join(' ')}
             >
-              <span style={{ opacity: active ? 1 : 0.7, display: 'flex' }}>{item.icon()}</span>
+              <span className={['flex', active ? 'opacity-100' : 'opacity-70'].join(' ')}>{item.icon()}</span>
               {item.label}
             </button>
           );
         })}
       </nav>
-    );
-  }
 
-  return (
-    <nav
-      style={{
-        width: 240,
-        flexShrink: 0,
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        background: 'var(--aegean-950)',
-        borderRight: '1px solid rgba(233,216,166,0.10)',
-        position: 'sticky',
-        top: 0,
-        overflowY: 'auto',
-      }}
-    >
-      <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid rgba(233,216,166,0.12)' }}>
-        <div style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900, letterSpacing: '0.18em', color: 'var(--papyrus-400)' }}>
-          KIMERA
+      {/* Desktop: barra lateral */}
+      <nav className="hidden md:flex w-60 shrink-0 h-screen flex-col bg-aegean-950 border-r border-r-[rgba(233,216,166,0.10)] sticky top-0 overflow-y-auto">
+        <div className="px-5 pt-6 pb-5 border-b border-b-[rgba(233,216,166,0.12)]">
+          <div className="font-display text-[22px] font-black tracking-[0.18em] text-papyrus-400">KIMERA</div>
+          <div className="font-sans text-[10px] tracking-[0.16em] text-aegean-300 mt-[2px]">AUDIOVISUAL</div>
         </div>
-        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 10, letterSpacing: '0.16em', color: 'var(--aegean-300)', marginTop: 2 }}>
-          AUDIOVISUAL
-        </div>
-      </div>
 
-      <div style={{ flex: 1, padding: '16px 12px', display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {ITEMS.map((item) => {
-          const active = pathname === item.href;
-          const isHover = hover === item.href;
-          return (
-            <button
-              key={item.href}
-              onClick={() => router.push(item.href)}
-              onMouseEnter={() => setHover(item.href)}
-              onMouseLeave={() => setHover(null)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                width: '100%',
-                padding: '10px 14px',
-                borderRadius: 'var(--radius-md)',
-                border: 'none',
-                cursor: 'pointer',
-                background: active ? 'rgba(69,123,157,0.22)' : isHover ? 'rgba(255,255,255,0.06)' : 'transparent',
-                color: active ? 'var(--papyrus-300)' : 'var(--ink-300)',
-                fontFamily: 'var(--font-sans)',
-                fontSize: 14,
-                fontWeight: active ? 700 : 500,
-                letterSpacing: '0.03em',
-                transition: 'all 0.15s',
-                textAlign: 'left',
-              }}
-            >
-              <span style={{ opacity: active ? 1 : 0.7 }}>{item.icon()}</span>
-              {item.label}
-              {active && <span style={{ marginLeft: 'auto', width: 4, height: 4, borderRadius: '50%', background: 'var(--aegean-400)' }} />}
-            </button>
-          );
-        })}
-      </div>
-
-      <div style={{ padding: '16px 14px', borderTop: '1px solid rgba(233,216,166,0.10)', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div
-          style={{
-            width: 36,
-            height: 36,
-            borderRadius: '50%',
-            background: 'var(--aegean-600)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexShrink: 0,
-            overflow: 'hidden',
-            position: 'relative',
-          }}
-        >
-          <Image src="https://i.pravatar.cc/72?img=3" alt="Maria Oliveira" fill sizes="36px" style={{ objectFit: 'cover' }} />
+        <div className="flex-1 px-3 py-4 flex flex-col gap-1">
+          {ITEMS.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <button
+                key={item.href}
+                onClick={() => router.push(item.href)}
+                className={[
+                  'flex items-center gap-3 w-full px-[14px] py-[10px] rounded-md border-0 cursor-pointer',
+                  'font-sans text-[14px] tracking-[0.03em] transition-all duration-150 text-left',
+                  active
+                    ? 'bg-[rgba(69,123,157,0.22)] text-papyrus-300 font-bold'
+                    : 'bg-transparent text-ink-300 font-medium hover:bg-white/[0.06]',
+                ].join(' ')}
+              >
+                <span className={active ? 'opacity-100' : 'opacity-70'}>{item.icon()}</span>
+                {item.label}
+                {active && <span className="ml-auto w-1 h-1 rounded-full bg-aegean-400" />}
+              </button>
+            );
+          })}
         </div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontFamily: 'var(--font-sans)', fontSize: 13, fontWeight: 700, color: 'var(--papyrus-300)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            Maria Oliveira
+
+        <div className="px-[14px] py-4 border-t border-t-[rgba(233,216,166,0.10)] flex items-center gap-[10px]">
+          <div className="w-9 h-9 rounded-full bg-aegean-600 flex items-center justify-center shrink-0 overflow-hidden relative">
+            <Image src="/assets/perfil.png" alt="Marina Martins" fill sizes="36px" className="object-cover" />
           </div>
-          <div style={{ fontSize: 11, color: 'var(--ink-400)', letterSpacing: '0.03em' }}>@mariaoliveira</div>
+          <div className="flex-1 min-w-0">
+            <div className="font-sans text-[13px] font-bold text-papyrus-300 overflow-hidden text-ellipsis whitespace-nowrap">
+              Marina Martins
+            </div>
+            <div className="text-[11px] text-ink-400 tracking-[0.03em]">@marinamartins</div>
+          </div>
+          <button
+            onClick={() => router.push('/')}
+            title="Sair"
+            className="bg-none border-0 cursor-pointer text-ink-500 p-1 flex rounded-sm transition-colors duration-150 hover:text-ink-300"
+          >
+            {IC.logout()}
+          </button>
         </div>
-        <button
-          onClick={() => router.push('/')}
-          title="Sair"
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            color: 'var(--ink-500)',
-            padding: 4,
-            display: 'flex',
-            borderRadius: 'var(--radius-sm)',
-            transition: 'color 0.15s',
-          }}
-        >
-          {IC.logout()}
-        </button>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }

@@ -11,45 +11,40 @@ type BadgeVariant =
   | 'default'
   | 'cinema';
 
-const VARIANTS: Record<BadgeVariant, CSSProperties> = {
-  brand: { background: 'var(--aegean-700)', color: 'var(--papyrus-100)' },
-  gold: { background: 'var(--papyrus-500)', color: 'var(--aegean-900)' },
-  terracotta: { background: 'var(--terracotta-500)', color: '#fff' },
-  success: { background: 'var(--laurel-100)', color: 'var(--laurel-500)' },
-  warning: { background: 'var(--amber-100)', color: 'var(--amber-500)' },
-  danger: { background: 'var(--danger-100)', color: 'var(--danger-500)' },
-  info: { background: 'var(--info-100)', color: 'var(--info-500)' },
-  default: { background: 'var(--ink-100)', color: 'var(--ink-600)' },
-  cinema: { background: 'var(--ink-800)', color: 'var(--ink-200)' },
+const VARIANTS: Record<BadgeVariant, string> = {
+  brand: 'bg-aegean-700 text-papyrus-100',
+  gold: 'bg-papyrus-500 text-aegean-900',
+  terracotta: 'bg-terracotta-500 text-white',
+  success: 'bg-laurel-100 text-laurel-500',
+  warning: 'bg-amber-100 text-amber-500',
+  danger: 'bg-danger-100 text-danger-500',
+  info: 'bg-info-100 text-info-500',
+  default: 'bg-ink-100 text-ink-600',
+  cinema: 'bg-ink-800 text-ink-200',
 };
 
 type BadgeProps = {
   children: ReactNode;
   variant?: BadgeVariant;
   dot?: boolean;
+  className?: string;
   style?: CSSProperties;
 };
 
-export default function Badge({ children, variant = 'default', dot = false, style }: BadgeProps) {
+export default function Badge({ children, variant = 'default', dot = false, className, style }: BadgeProps) {
   return (
     <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 5,
-        fontFamily: 'var(--font-sans)',
-        fontSize: 'var(--text-xs)',
-        fontWeight: 700,
-        letterSpacing: 'var(--tracking-widest)',
-        padding: '3px 10px',
-        borderRadius: 'var(--radius-badge)',
-        textTransform: 'uppercase',
-        lineHeight: 1.4,
-        ...VARIANTS[variant],
-        ...style,
-      }}
+      className={[
+        'inline-flex items-center gap-[5px] font-sans text-xs font-bold tracking-widest',
+        'px-[10px] py-[3px] rounded-full uppercase leading-[1.4]',
+        VARIANTS[variant],
+        className ?? '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={style}
     >
-      {dot && <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'currentColor' }} />}
+      {dot && <span className="w-[6px] h-[6px] rounded-full bg-current" />}
       {children}
     </span>
   );

@@ -1,18 +1,13 @@
 'use client';
 
-import {
-  useId,
-  useState,
-  type CSSProperties,
-  type InputHTMLAttributes,
-  type ReactNode,
-} from 'react';
+import { useId, type CSSProperties, type InputHTMLAttributes, type ReactNode } from 'react';
 
 type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'style'> & {
   label?: string;
   error?: string;
   hint?: string;
   icon?: ReactNode;
+  className?: string;
   style?: CSSProperties;
 };
 
@@ -28,43 +23,30 @@ export default function Input({
   required = false,
   disabled = false,
   icon,
+  className,
   style,
   ...rest
 }: InputProps) {
   const generatedId = useId();
-  const [focused, setFocused] = useState(false);
   const inputId = id ?? (label ? label.toLowerCase().replace(/\s+/g, '-') : generatedId);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 5, ...style }}>
+    <div className={['flex flex-col gap-[5px]', className ?? ''].filter(Boolean).join(' ')} style={style}>
       {label && (
         <label
           htmlFor={inputId}
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: 'var(--text-sm)',
-            fontWeight: 600,
-            color: error ? 'var(--danger-500)' : 'var(--text-strong)',
-            letterSpacing: 'var(--tracking-wide)',
-          }}
+          className={[
+            'font-sans text-sm font-semibold tracking-wide',
+            error ? 'text-danger-500' : 'text-strong',
+          ].join(' ')}
         >
           {label}
-          {required && <span style={{ color: 'var(--terracotta-500)', marginLeft: 3 }}>*</span>}
+          {required && <span className="text-terracotta-500 ml-[3px]">*</span>}
         </label>
       )}
-      <div style={{ position: 'relative' }}>
+      <div className="relative">
         {icon && (
-          <span
-            style={{
-              position: 'absolute',
-              left: 11,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              color: 'var(--text-muted)',
-              display: 'flex',
-              pointerEvents: 'none',
-            }}
-          >
+          <span className="absolute left-[11px] top-1/2 -translate-y-1/2 text-muted flex pointer-events-none">
             {icon}
           </span>
         )}
@@ -76,34 +58,22 @@ export default function Input({
           onChange={onChange}
           disabled={disabled}
           required={required}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          style={{
-            width: '100%',
-            boxSizing: 'border-box',
-            fontFamily: 'var(--font-sans)',
-            fontSize: 'var(--text-base)',
-            color: 'var(--text-strong)',
-            background: disabled ? 'var(--papyrus-200)' : 'var(--white)',
-            border: `1px solid ${error ? 'var(--danger-500)' : focused ? 'var(--aegean-500)' : 'var(--border-default)'}`,
-            borderRadius: 'var(--radius-input)',
-            padding: icon ? '10px 14px 10px 36px' : '10px 14px',
-            outline: 'none',
-            boxShadow: focused ? '0 0 0 3px rgba(69,123,157,0.22)' : 'none',
-            transition: 'border-color 0.15s, box-shadow 0.15s',
-            opacity: disabled ? 0.6 : 1,
-          }}
+          className={[
+            'w-full box-border font-sans text-base text-strong rounded-input outline-none border',
+            'transition-[border-color,box-shadow] duration-150',
+            icon ? 'pl-9 pr-[14px] py-[10px]' : 'px-[14px] py-[10px]',
+            disabled ? 'bg-papyrus-200 opacity-60' : 'bg-white',
+            error
+              ? 'border-danger-500'
+              : 'border-default focus:border-aegean-500 focus:shadow-[0_0_0_3px_rgba(69,123,157,0.22)]',
+          ]
+            .filter(Boolean)
+            .join(' ')}
           {...rest}
         />
       </div>
       {(error || hint) && (
-        <span
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: 'var(--text-sm)',
-            color: error ? 'var(--danger-500)' : 'var(--text-muted)',
-          }}
-        >
+        <span className={['font-sans text-sm', error ? 'text-danger-500' : 'text-muted'].join(' ')}>
           {error || hint}
         </span>
       )}

@@ -6,10 +6,8 @@ import Button from '@/components/ui/Button';
 import PostCard from '@/components/ui/PostCard';
 import { IC } from '@/components/icons';
 import { POSTS, type Post } from '@/lib/data';
-import { useIsMobile } from '@/hooks/useIsMobile';
 
 export default function RedePage() {
-  const isMobile = useIsMobile();
   const [compose, setCompose] = useState('');
   const [posts, setPosts] = useState<Post[]>(POSTS);
 
@@ -18,8 +16,8 @@ export default function RedePage() {
     setPosts([
       {
         id: Date.now(),
-        author: 'Maria Oliveira',
-        handle: 'mariaoliveira',
+        author: 'Marina Martins',
+        handle: 'marinamartins',
         time: 'agora',
         likes: 0,
         comments: 0,
@@ -33,62 +31,32 @@ export default function RedePage() {
   };
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto', background: 'var(--surface-page)' }}>
-      <div style={{ maxWidth: 640, margin: '0 auto', padding: isMobile ? '24px 16px' : '32px 24px' }}>
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 700, letterSpacing: '0.06em', color: 'var(--aegean-900)', marginBottom: 20 }}>
-          Rede
-        </h1>
+    <div className="flex-1 overflow-y-auto bg-page">
+      <div className="max-w-[640px] mx-auto px-4 py-6 md:px-6 md:py-8">
+        <h1 className="font-display text-[26px] font-bold tracking-[0.06em] text-aegean-900 mb-5">Rede</h1>
 
-        <div
-          style={{
-            background: 'var(--white)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: 'var(--radius-card)',
-            padding: 16,
-            marginBottom: 20,
-            boxShadow: 'var(--shadow-xs)',
-          }}
-        >
-          <div style={{ display: 'flex', gap: 12 }}>
-            <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
-              <Image src="https://i.pravatar.cc/80?img=3" alt="Você" fill sizes="40px" style={{ objectFit: 'cover' }} />
+        <div className="bg-white border border-subtle rounded-card p-4 mb-5 shadow-xs">
+          <div className="flex gap-3">
+            <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 relative">
+              <Image src="/assets/perfil.png" alt="Você" fill sizes="40px" className="object-cover" />
             </div>
-            <div style={{ flex: 1 }}>
+            <div className="flex-1">
               <textarea
                 value={compose}
                 onChange={(e) => setCompose(e.target.value)}
                 placeholder="O que está criando hoje?"
                 rows={3}
-                style={{
-                  width: '100%',
-                  border: 'none',
-                  resize: 'none',
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: 15,
-                  color: 'var(--text-body)',
-                  outline: 'none',
-                  lineHeight: 1.55,
-                  background: 'transparent',
-                }}
+                className="w-full border-0 resize-none font-sans text-[15px] text-body outline-none leading-[1.55] bg-transparent"
               />
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  borderTop: '1px solid var(--border-subtle)',
-                  paddingTop: 10,
-                  marginTop: 6,
-                }}
-              >
-                <div style={{ display: 'flex', gap: 8, color: 'var(--text-muted)' }}>{IC.upload(18)}</div>
+              <div className="flex justify-between items-center border-t border-subtle pt-[10px] mt-[6px]">
+                <div className="flex gap-2 text-muted">{IC.upload(18)}</div>
                 <Button size="sm" onClick={submit} disabled={!compose.trim()}>Publicar</Button>
               </div>
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div className="flex flex-col gap-3">
           {posts.map((p) => (
             <PostCard key={p.id} author={p.author} authorHandle={p.handle} content={p.content} timestamp={p.time} likes={p.likes} comments={p.comments} tags={p.tags} liked={p.liked} />
           ))}

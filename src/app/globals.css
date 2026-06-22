@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ============================================================
    KIMERA AUDIOVISUAL — GLOBAL STYLES
    Design tokens: "Cinematic Antiquity" — Aegean blue, papyrus
