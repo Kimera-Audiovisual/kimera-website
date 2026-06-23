@@ -22,7 +22,7 @@ export default function HomePage() {
             DOMINGO, 22 DE JUNHO
           </div>
           <h1 className="font-display text-[34px] font-bold tracking-[0.06em] text-aegean-900 mb-[6px]">
-            Bem-vinda, Maria.
+            Bem-vinda, Marina.
           </h1>
           <p className="font-sans text-[15px] text-muted">
             3 novos conteúdos no catálogo · 12 novas publicações na Rede

@@ -19,7 +19,10 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-aegean-950 overflow-y-auto">
       <header className="flex items-center justify-between px-5 py-4 md:px-12 md:py-5 border-b border-b-[rgba(233,216,166,0.10)]">
-        <div className="font-display text-[22px] font-black tracking-[0.18em] text-papyrus-400">KIMERA</div>
+        <div>
+          <div className="font-display text-[22px] font-black tracking-[0.18em] text-papyrus-400">KIMERA</div>
+          <div className="font-sans text-[10px] tracking-[0.16em] text-aegean-300 mt-[2px]">AUDIOVISUAL</div>
+        </div>
         <div className="flex gap-[10px]">
           <Button variant="ghost-dark" size="sm" onClick={onEnter}>Entrar</Button>
           <Button variant="secondary" size="sm" onClick={onRegister}>Criar conta</Button>
@@ -36,7 +39,7 @@ export default function LandingPage() {
           </h1>
           <div className="h-[2px] w-20 bg-[linear-gradient(90deg,var(--papyrus-600),transparent)] mb-6" />
           <p className="font-serif italic text-[16px] md:text-[20px] text-ink-400 leading-relaxed mb-9 max-w-[440px]">
-            A Kimera é a plataforma onde artistas e estudantes de audiovisual compartilham obras, constroem redes e fazem história.
+            A Kimera Audiovisual é a plataforma onde artistas e estudantes de audiovisual compartilham obras, constroem redes e fazem história.
           </p>
           <div className="flex gap-3 flex-wrap">
             <Button size="lg" onClick={onRegister}>Criar conta gratuita</Button>
